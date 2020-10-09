@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='UTF-8' />
+        <title>The Landmine game</title>
+        <script>
+           var landmine = '';
+           var score = 0;
+
+           function onInitLandmineGame(){//初始化地雷位置。
+               var x = parseInt(Math.random()*(3-1+1)+1);
+               var y = parseInt(Math.random()*(3-1+1)+1);
+               landmine = 'btn_'+x+'_'+y;
+           }
+
+          function onSelectBtn(btnId){//處理玩家所選擇的區塊之成績的計算作業。
+                 onInitLandmineGame();
+                 var btnIdStr = "( "+btnId.toString().substring(4,7).replace("_",",") +" )";
+                 var landmineStr = "( "+landmine.toString().substring(4,7).replace("_",",")+" )";
+                 
+                 if(btnId === landmine){//如果踩到地雷時。
+                   alert("踩到地雷了!! 你的位置是: "+btnIdStr+" 地雷位置也是: "+landmineStr+" 。");
+                   setScore(-1);//踩到地雷而扣分。
+                   onInitLandmineGame();
+                 }else{
+                  alert("得分!! 你的位置是: "+btnIdStr+" 地雷位置也是: "+landmineStr+" 。");
+                  setScore(1);//猜中無地雷區而加分。
+                  onInitLandmineGame();
+                 }
+            }
+            function setScore(getScore){
+              score += getScore;//計算得分及扣分，並且更新總分的分數。
+              document.getElementById("msg").innerText = "得分: "+getScore+" 分 ，總成績: "+score+" 分。";
+            }
+            
+        </script>
+    </head>
+    <body>
+        <h1>踩地雷遊戲</h1>
+        <h3>請選出你猜測無地雷的安全區塊之位置</h3>
+        <hr/>
+        <table style="width:20%">
+         
+         <tr>
+            <td><input type="button" id="btn_1_1" value="( 1,1 )" onclick="onSelectBtn('btn_1_1');"></td>
+            <td><input type="button" id="btn_1_2" value="( 1,2 )" onclick="onSelectBtn('btn_1_2');"></td>
+            <td><input type="button" id="btn_1_3" value="( 1,3 )" onclick="onSelectBtn('btn_1_3');"></td>
+          </tr>
+          <tr>
+            <td><input type="button" id="btn_2_1" value="( 2,1 )" onclick="onSelectBtn('btn_2_1');"></td>
+            <td><input type="button" id="btn_2_2" value="( 2,2 )" onclick="onSelectBtn('btn_2_2');"></td>
+            <td><input type="button" id="btn_2_3" value="( 2,3 )" onclick="onSelectBtn('btn_2_3');"></td>
+          </tr>
+          <tr>
+            <td><input type="button" id="btn_3_1" value="( 3,1 )" onclick="onSelectBtn('btn_3_1');"></td>
+            <td><input type="button" id="btn_3_2" value="( 3,2 )" onclick="onSelectBtn('btn_3_2');"></td>
+            <td><input type="button" id="btn_3_3" value="( 3,3 )" onclick="onSelectBtn('btn_3_3');"></td>
+          </tr>
+        </table>
+    
+    <hr/>
+    <p id="msg">得分: 0  分 ，總成績: 0 分。</p>
+    </body>
+</html>
